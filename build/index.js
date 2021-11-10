@@ -12,7 +12,7 @@ const helmet_1 = __importDefault(require("helmet"));
 const logger_1 = __importDefault(require("./utils/logger"));
 const routes_1 = __importDefault(require("./routes"));
 dotenv_1.default.config();
-const port = process.env.USER_GATEWAY_PORT;
+const port = process.env.PORT || 3000;
 async function startServer() {
     const app = express_1.default();
     app.use(express_1.default.json());

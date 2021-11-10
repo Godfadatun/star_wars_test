@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Comments = void 0;
-/* eslint-disable import/no-cycle */
 const typeorm_1 = require("typeorm");
 let Comments = class Comments {
 };

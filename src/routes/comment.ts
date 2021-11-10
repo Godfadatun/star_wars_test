@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 import { createComment, getFilmCharactersList, getFilmList } from '../controllers/comment';
+import logger from '../utils/logger';
 
 export const createCommentRoute: RequestHandler = async (req, res) => {
   try {
@@ -13,6 +14,7 @@ export const createCommentRoute: RequestHandler = async (req, res) => {
     const responseCode = response.success === true ? 200 : 400;
     return res.status(responseCode).json(response);
   } catch (error) {
+    logger.error(error);
     return res.status(500).json({ success: false, error: 'Could not fetch beneficiaries.' });
   }
 };
@@ -23,6 +25,7 @@ export const getFilmRoute: RequestHandler = async (req, res) => {
     const responseCode = response.success === true ? 200 : 400;
     return res.status(responseCode).json(response);
   } catch (error) {
+    logger.error(error);
     return res.status(500).json({ success: false, error: 'Could not fetch beneficiaries.' });
   }
 };
@@ -33,6 +36,7 @@ export const getFilmCharactersRoute: RequestHandler = async (req, res) => {
     const responseCode = response.success === true ? 200 : 400;
     return res.status(responseCode).json(response);
   } catch (error) {
+    logger.error(error);
     return res.status(500).json({ success: false, error: 'Could not fetch beneficiaries.' });
   }
 };
