@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllFilmRoute = exports.getFilmRoute = exports.createCommentRoute = void 0;
+exports.getFilmCharactersRoute = exports.getFilmRoute = exports.createCommentRoute = void 0;
 const comment_1 = require("../controllers/comment");
 const createCommentRoute = async (req, res) => {
     try {
@@ -29,9 +29,9 @@ const getFilmRoute = async (req, res) => {
     }
 };
 exports.getFilmRoute = getFilmRoute;
-const getAllFilmRoute = async (req, res) => {
+const getFilmCharactersRoute = async (req, res) => {
     try {
-        const response = await comment_1.getFilmList({});
+        const response = await comment_1.getFilmCharactersList(req.query);
         const responseCode = response.success === true ? 200 : 400;
         return res.status(responseCode).json(response);
     }
@@ -39,5 +39,5 @@ const getAllFilmRoute = async (req, res) => {
         return res.status(500).json({ success: false, error: 'Could not fetch beneficiaries.' });
     }
 };
-exports.getAllFilmRoute = getAllFilmRoute;
+exports.getFilmCharactersRoute = getFilmCharactersRoute;
 //# sourceMappingURL=comment.js.map

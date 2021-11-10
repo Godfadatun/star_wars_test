@@ -13,6 +13,16 @@ export const getFilmSchema = joi.object().keys({
   viewComment: joi.string().valid('comments').optional(),
 });
 
+export const getFilmCharactersSchema = joi
+  .object({
+    film_index: joi.string().max(500).required(),
+    gender: joi.string().valid('male', 'female', 'not-available').optional(),
+    height: joi.number().integer().min(1).optional(),
+    operator: joi.string().valid('greaterThan', 'lessThan', 'equalto').optional(),
+  })
+  .oxor('height', 'gender')
+  .and('height', 'operator');
+
 export interface Response {
   success: boolean;
   message?: string;

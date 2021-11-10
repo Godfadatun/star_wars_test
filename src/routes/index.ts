@@ -1,5 +1,5 @@
 import express from 'express';
-import { createCommentRoute, getAllFilmRoute, getFilmRoute } from './comment';
+import { createCommentRoute, getFilmCharactersRoute, getFilmRoute } from './comment';
 
 const router = express.Router();
 
@@ -7,5 +7,6 @@ router.get('/', (_, res) => res.json({ success: true, message: 'User gateway v1 
 
 router.post('/create-comment', createCommentRoute);
 router.get('/get-film', getFilmRoute);
+router.get('/get-film-characters', getFilmCharactersRoute);
 
 export default router;

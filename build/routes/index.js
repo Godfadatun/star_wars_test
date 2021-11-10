@@ -9,6 +9,6 @@ const router = express_1.default.Router();
 router.get('/', (_, res) => res.json({ success: true, message: 'User gateway v1 up.' }));
 router.post('/create-comment', comment_1.createCommentRoute);
 router.get('/get-film', comment_1.getFilmRoute);
-router.get('/get-all-film', comment_1.getAllFilmRoute);
+router.get('/get-film-characters', comment_1.getFilmCharactersRoute);
 exports.default = router;
 //# sourceMappingURL=index.js.map
