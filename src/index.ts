@@ -9,7 +9,7 @@ import logger from './utils/logger';
 import router from './routes';
 
 dotenv.config();
-const port = process.env.USER_GATEWAY_PORT || 3000;
+const port = process.env.PORT || 3000;
 
 async function startServer(): Promise<void> {
   const app: Application = express();

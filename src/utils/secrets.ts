@@ -11,7 +11,7 @@ function throwIfUndefined(secret: string): string {
   return process.env[secret] as string;
 }
 
-export const USER_GATEWAY_PORT = throwIfUndefined('USER_GATEWAY_PORT');
+export const PORT = throwIfUndefined('PORT');
 export const SWAPI_BASE_URL = throwIfUndefined('SWAPI_BASE_URL');
 export const DB_NAME = throwIfUndefined('DB_NAME');
 export const DB_HOST = throwIfUndefined('DB_HOST');
