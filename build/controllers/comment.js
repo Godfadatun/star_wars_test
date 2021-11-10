@@ -46,7 +46,6 @@ const getFilmList = async ({ character, film_index, viewComment }) => {
     try {
         if (!film_index) {
             const allFilms = await swapi_1.getSwapiFilmsAPI(film_index);
-            console.log(allFilms.data.results[0].release_date);
             const newDate = (data) => new Date(data);
             const films = allFilms.data.results.sort((a, b) => newDate(b.release_date) - newDate(a.release_date));
             return {
