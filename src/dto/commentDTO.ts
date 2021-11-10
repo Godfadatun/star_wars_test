@@ -14,6 +14,7 @@ export interface getFilmDTO {
 
 export interface getFilmCharactersDTO {
   film_index: string;
+  character_name?: string;
   gender?: 'male' | 'female' | 'not-available';
   height?: number;
   operator?: 'greaterThan' | 'lessThan' | 'equalto';

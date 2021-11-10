@@ -4,7 +4,7 @@
 import { theResponse } from '../utils/interface';
 import { ResourceNotFoundError } from '../utils/errors';
 import { getQueryRunner } from '../database/helpers/db';
-import { createCommentDTO, genderCharactersDTO, getFilmCharactersDTO, getFilmDTO } from './dto/commentDTO';
+import { createCommentDTO, genderCharactersDTO, getFilmCharactersDTO, getFilmDTO } from '../dto/commentDTO';
 import { commentSchema, getFilmCharactersSchema, getFilmSchema } from '../authSchema/commentSchema';
 import { Comments } from '../database/models/Comment';
 import { getSwapiCharactersAPI, getSwapiFilmsAPI } from '../integrations/swapi';
@@ -119,8 +119,8 @@ const converCMToFeetAndInches = (data: number): string => {
   return `${newfeet[0]}ft ${inches.toFixed(2)}In`;
 };
 
-export const getFilmCharactersList = async ({ film_index, height, gender, operator }: any): Promise<theResponse> => {
-  const validation = getFilmCharactersSchema.validate({ film_index, height, gender, operator });
+export const getFilmCharactersList = async ({ film_index, height, gender, operator, character_name }: any): Promise<theResponse> => {
+  const validation = getFilmCharactersSchema.validate({ film_index, height, gender, operator, character_name });
   if (validation.error) return ResourceNotFoundError(validation.error);
 
   const queryRunner = await getQueryRunner();
@@ -181,6 +181,15 @@ export const getFilmCharactersList = async ({ film_index, height, gender, operat
         });
 
       const others = newHeight.sort((a: any, b: any) => Number(a.data.height) - Number(b.data.height));
+      genderCharacters.data.characterResult = others;
+      genderCharacters.data.metadata = { numberOfCharacters: others.length };
+      return genderCharacters;
+    }
+
+    if (character_name) {
+      const newHeight = characterResult.filter((character: any) => character.data.name.includes(character_name));
+
+      const others = newHeight.sort((a: any, b: any) => (a.data.name < b.data.name ? -1 : 1));
       genderCharacters.data.characterResult = others;
       genderCharacters.data.metadata = { numberOfCharacters: others.length };
       return genderCharacters;

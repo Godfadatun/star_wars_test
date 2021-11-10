@@ -15,12 +15,13 @@ export const getFilmSchema = joi.object().keys({
 
 export const getFilmCharactersSchema = joi
   .object({
-    film_index: joi.string().max(500).required(),
+    film_index: joi.string().required(),
+    character_name: joi.string().optional(),
     gender: joi.string().valid('male', 'female', 'not-available').optional(),
     height: joi.number().integer().min(1).optional(),
     operator: joi.string().valid('greaterThan', 'lessThan', 'equalto').optional(),
   })
-  .oxor('height', 'gender')
+  .oxor('height', 'gender', 'character_name')
   .and('height', 'operator');
 
 export interface Response {
