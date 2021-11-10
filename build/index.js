@@ -20,6 +20,9 @@ async function startServer() {
     app.use(cors_1.default());
     app.use(helmet_1.default());
     app.use('/api', routes_1.default);
+    app.get('/', (req, res) => {
+        res.json({ greeting: `Hello, Good Morning ${port} !` });
+    });
     app.use((req, res, _next) => {
         res.status(404).send({
             status: false,

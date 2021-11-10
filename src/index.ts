@@ -21,6 +21,10 @@ async function startServer(): Promise<void> {
 
   app.use('/api', router);
 
+  app.get('/', (req: Request, res: Response) => {
+    res.json({ greeting: `Hello, Good Morning ${port} !` });
+  });
+
   app.use((req, res, _next): void => {
     res.status(404).send({
       status: false,
