@@ -17,6 +17,6 @@ module.exports = {
   extra: {
     max: 25,
     connectionTimeoutMillis: 1000,
-    ssl: true,
+    ssl: { rejectUnauthorized: false },
   },
 };
