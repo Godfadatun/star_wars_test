@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { theResponse } from '../utils/interface';
@@ -113,8 +114,8 @@ export const getFilmList = async ({ character, film_index, viewComment }: any): 
 
 const converCMToFeetAndInches = (data: number): string => {
   const newfeet = `${data / 30.48}`.split('.');
+  const inches = Number(`0.${newfeet[1]}`) * 12;
 
-  const inches = Number(newfeet[1]) * 12;
   return `${newfeet[0]}ft ${inches.toFixed(2)}In`;
 };
 
@@ -133,10 +134,7 @@ export const getFilmCharactersList = async ({ film_index, height, gender, operat
 
     const { opening_crawl, title } = film.data;
 
-    const newData = {
-      title,
-      opening_crawl,
-    };
+    const newData = { title, opening_crawl };
 
     const characterResult = await Promise.all(
       film.data.characters.map((single_character: string) =>
@@ -147,33 +145,49 @@ export const getFilmCharactersList = async ({ film_index, height, gender, operat
     const genderCharacters: genderCharactersDTO = {
       success: true,
       message: 'Film Characters gotten successfully',
-      data: { ...newData, characterResult: [] },
+      data: { ...newData, characterResult: [], metadata: {} },
     };
 
     if (gender) {
       if (gender === 'not-available') {
         const others = characterResult.filter((character: any) => character.data.gender === 'n/a');
         genderCharacters.data.characterResult = others;
+        genderCharacters.data.metadata = { numberOfCharacters: others.length };
         return genderCharacters;
       }
 
       const binaryGender = characterResult.filter((character: any) => character.data.gender === gender);
       genderCharacters.data.characterResult = binaryGender;
+      genderCharacters.data.metadata = { numberOfCharacters: binaryGender.length };
       return genderCharacters;
     }
 
     if (height) {
       let newHeight: any;
-      if (operator === 'greaterThan') newHeight = characterResult.filter((character: any) => Number(character.data.height) > height);
-      if (operator === 'lessThan') newHeight = characterResult.filter((character: any) => Number(character.data.height) < height);
-      if (operator === 'equalto') newHeight = characterResult.filter((character: any) => Number(character.data.height) === Number(height));
+      if (operator === 'greaterThan')
+        newHeight = characterResult.filter((character: any) => {
+          if (Number(character.data.height) > Number(height)) character.data.heightInFeet = converCMToFeetAndInches(Number(character.data.height));
+          return Number(character.data.height) > Number(height);
+        });
+      if (operator === 'lessThan')
+        newHeight = characterResult.filter((character: any) => {
+          if (Number(character.data.height) < Number(height)) character.data.heightInFeet = converCMToFeetAndInches(Number(character.data.height));
+          return Number(character.data.height) < Number(height);
+        });
+      if (operator === 'equalto')
+        newHeight = characterResult.filter((character: any) => {
+          if (Number(character.data.height) === Number(height)) character.data.heightInFeet = converCMToFeetAndInches(Number(character.data.height));
+          return Number(character.data.height) === Number(height);
+        });
 
       const others = newHeight.sort((a: any, b: any) => Number(a.data.height) - Number(b.data.height));
       genderCharacters.data.characterResult = others;
+      genderCharacters.data.metadata = { numberOfCharacters: others.length };
       return genderCharacters;
     }
 
     genderCharacters.data.characterResult = characterResult;
+    genderCharacters.data.metadata = { numberOfCharacters: characterResult.length };
     return genderCharacters;
   } catch (e) {
     logger.error(e);

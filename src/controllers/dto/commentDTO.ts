@@ -24,6 +24,7 @@ export interface genderCharactersDTO {
   message: string;
   data: {
     characterResult: any[];
+    metadata: any;
     title: any;
     opening_crawl: any;
   };
