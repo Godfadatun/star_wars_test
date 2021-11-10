@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon",
-    "build": "rimraf ./build && tsc && npx typeorm migration:run",
+    "build": "rimraf ./build && tsc && typeorm migration:run",
     "start": "npm run build && node build/index.js",
     "lint": "eslint . --ext .ts",
     "migrate": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run"
