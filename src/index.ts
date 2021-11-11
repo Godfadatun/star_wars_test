@@ -5,6 +5,9 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 
+import swaggerUI from 'swagger-ui-express';
+import * as swaggerDocument from './routes/swagger.json';
+
 import logger from './utils/logger';
 import router from './routes';
 
@@ -20,6 +23,8 @@ async function startServer(): Promise<void> {
   app.use(helmet());
 
   app.use('/api', router);
+
+  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
   app.get('/', (req: Request, res: Response) => {
     res.json({ greeting: `Hello, Good Morning ${port} !` });
