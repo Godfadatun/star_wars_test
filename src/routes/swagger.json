@@ -13,7 +13,7 @@
     "basePath": "/api",
     "tags": [
         {"name": "Get-Film", "description": "Used to get films with some filters; \n Like ``comments``, ``characters`` and **Film Selection**"},
-        {"name": "Get-Film-characters", "description": "Used to get a films characters with some filters; \n Like ``gender``, ``height`` and ``name`` "},
+        {"name": "Get-Film-characters", "description": "Used to get a films characters with some filters; \n Like ``gender``, ``height`` and ``name``  \n **NB:** Only one of the available filter can be used per time "},
         {
             "name": "Create-comment", 
             "description": "Used to create a comment; \n **NB:** Comment can't be longer than ``500`` characters "
